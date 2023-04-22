@@ -69,9 +69,9 @@ stays pl
         ##левый бит - влево, правый бит - вправо
 
         ldi r0, 0b00000010 ## смотрю сдвиг влево
-        and r2, r0
+        and r3, r0
         if 
-            tst r2
+            tst r0
         is nz
             ldi r0, cell_x
             ld r0, r1
@@ -83,7 +83,7 @@ stays pl
             st r0, r1
         else
             ldi r0, 0b00000001 
-            and r2, r0
+            and r3, r0
             if
                 tst r0
             is nz
@@ -103,20 +103,15 @@ stays pl
 
     else
         ldi r3, changed
-        ld r3,r3
+        ld r3,r0
         if
-            tst r3
+            tst r0
         is nz
-            ldi r0, 0
-            ldi r3, changed
-            st r3, r0 ## занулил changed, чтобы заново не менять клетку
-
-
-            ldi r0, cell_x
+            ldi r0, cell_x ## загружаю обе координаты
             ld r0,r0
             ldi r1, cell_y
             ld r1,r1
-            shl r0
+            shl r0     ##объединяю их и складываю в r1
             shl r0
             shl r0
             shl r0
@@ -130,8 +125,12 @@ stays pl
             shl r0
             shl r1
 
-            ldi r0, addr
+            ldi r0, addr ## записываю итоговые координаты в addr
             st r0, r1
+
+
+            ldi r0, 0
+            st r3, r0 ## занулил changed, чтобы заново не менять клетку
         fi
         # ldi r2, 
         ## надо аппаратно менять значение на противоположное, когда получаю новый адрес на выходе
@@ -141,7 +140,7 @@ stays pl
         ## потом надо бы сюда присобачить bcd вывод координат выбранной ячейки
     fi
 
-    clr r0
+    clr r0 ## на всякий случай очищаю регистры перед следующей итерацией
     clr r1
     clr r2
     clr r3
@@ -150,7 +149,7 @@ wend
 
 halt
 
-# asect 0x80## мб стоит поменять потом
+
 
 asect 0x21           ## output
 # input: ds 1
