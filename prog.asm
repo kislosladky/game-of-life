@@ -1,11 +1,6 @@
-## тут все более-менее работает, но логика странная
-
-
 asect 0x00
 
-# ldi r0, default ## загружаю в память начальное положение клетки
 ldi r0, 0b00000111
-# ld r0,r0
 ldi r1, cell_x
 st r1, r0
 ldi r1, cell_y
@@ -109,29 +104,25 @@ wend
 
 halt
 
-
-asect 0x21           ## output
-# input: ds 1
+asect 0x21   
 joystick: 
 
-asect 0x22           ## output
-# set: ds 1
+asect 0x22     
 set:    
 
-asect 0x23           ## not used
-# alive: ds 1
+asect 0x23           
 alive:
 
-asect 0x24           ## is it used??
+asect 0x24       
 changed:
 
-asect 0x25           ### input/output
+asect 0x25        
 cell_x:
 
-asect 0x26           ### input/output
+asect 0x26          
 cell_y:
 
-asect 0x27           ### output
+asect 0x27           
 addr:
 
 end
